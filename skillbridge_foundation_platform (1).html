@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge Foundation | Empowering Talent, Ending Unemployment</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1E40AF',
+                            darkBlue: '#0F172A',
+                            green: '#059669',
+                            lightGreen: '#D1FAE5',
+                            emerald: '#10B981',
+                            accent: '#3B82F6',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .page-view { display: none; }
+        .page-view.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                            <line x1="4" y1="22" x2="4" y2="15"></line>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight text-slate-900 block leading-none">SkillBridge</span>
+                        <span class="text-xs font-semibold text-emerald-600 tracking-wider uppercase">Foundation</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                    <button onclick="navigateTo('home')" id="nav-home" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition-all text-blue-700 bg-blue-50">Home</button>
+                    <button onclick="navigateTo('about')" id="nav-about" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">About Us</button>
+                    <button onclick="navigateTo('programs')" id="nav-programs" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Programs</button>
+                    <button onclick="navigateTo('employers')" id="nav-employers" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">For Employers</button>
+                    <button onclick="navigateTo('impact')" id="nav-impact" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">Impact</button>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <button onclick="openDonateModal()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-600/20 hover:from-emerald-700 hover:to-teal-700 hover:shadow-emerald-600/30 transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-heart mr-2 text-rose-300"></i>Donate Now
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Home</button>
+            <button onclick="navigateTo('about'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">About Us</button>
+            <button onclick="navigateTo('programs'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Programs</button>
+            <button onclick="navigateTo('employers'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">For Employers</button>
+            <button onclick="navigateTo('impact'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-base font-semibold text-slate-700 hover:bg-slate-100">Impact</button>
+            <button onclick="openDonateModal(); toggleMobileMenu()" class="w-full mt-2 px-4 py-3 rounded-xl font-bold text-center bg-emerald-600 text-white shadow-md">Donate Now</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow">
+        
+        <!-- PAGE 1: HOME -->
+        <section id="page-home" class="page-view active">
+            <!-- Hero Banner -->
+            <div class="relative bg-slate-900 text-white overflow-hidden py-20 lg:py-28">
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-7 space-y-6">
+                            <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                <i class="fa-solid fa-sparkles mr-2 text-emerald-400"></i> Empowering 10,000+ Youth by 2028
+                            </span>
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                                Bridging the Gap Between <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Talent & Opportunity</span>
+                            </h1>
+                            <p class="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed">
+                                SkillBridge Foundation combats global unemployment by equipping ambitious, underrepresented talent with market-driven digital skills, 1-on-1 industry mentorship, and direct career placement.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                                <button onclick="navigateTo('programs')" class="px-8 py-4 rounded-xl font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/30 transition-all text-center">
+                                    Explore Training Bootcamps <i class="fa-solid fa-arrow-right ml-2"></i>
+                                </button>
+                                <button onclick="navigateTo('employers')" class="px-8 py-4 rounded-xl font-semibold bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 transition-all text-center">
+                                    Hire Work-Ready Talent
+                                </button>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-5">
+                            <div class="relative bg-slate-800/80 backdrop-blur border border-slate-700 rounded-3xl p-6 sm:p-8 shadow-2xl">
+                                <div class="flex items-center justify-between pb-6 border-b border-slate-700">
+                                    <h3 class="text-lg font-bold text-white">Our Collective Reach</h3>
+                                    <span class="text-xs font-semibold px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400">Live Metrics</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-6 my-6">
+                                    <div>
+                                        <p class="text-3xl font-black text-blue-400">89%</p>
+                                        <p class="text-xs text-slate-400 mt-1 uppercase font-semibold">Job Placement Rate</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-3xl font-black text-emerald-400">4,850+</p>
+                                        <p class="text-xs text-slate-400 mt-1 uppercase font-semibold">Graduates Employed</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-3xl font-black text-amber-400">140+</p>
+                                        <p class="text-xs text-slate-400 mt-1 uppercase font-semibold">Employer Partners</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-3xl font-black text-purple-400">2.4x</p>
+                                        <p class="text-xs text-slate-400 mt-1 uppercase font-semibold">Avg. Income Growth</p>
+                                    </div>
+                                </div>
+                                <div class="pt-4 border-t border-slate-700">
+                                    <button onclick="openDonateModal()" class="w-full py-3.5 rounded-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-md transition-all">
+                                        Sponsor a Trainee Today ($150)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillars Section -->
+            <div class="py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <h2 class="text-xs font-extrabold uppercase tracking-widest text-emerald-600 mb-2">How We Break The Cycle</h2>
+                        <h3 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Our 3-Pillar Solution Model</h3>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all">
+                            <div class="w-14 h-14 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold mb-6">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">1. Market-Aligned Upskilling</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                We design fast-track tech, data, and digital marketing bootcamps curated directly alongside enterprise hiring leaders to match exact skill shortages.
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all">
+                            <div class="w-14 h-14 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl font-bold mb-6">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">2. 1-on-1 Executive Mentorship</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Every student gets paired with an active industry professional for interview prep, portfolio reviews, soft skills training, and personal advocacy.
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-all">
+                            <div class="w-14 h-14 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl font-bold mb-6">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3">3. Guaranteed Job Pathways</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                We partner directly with companies to secure internship placements, apprenticeship roles, and remote job access for top-performing graduates.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: ABOUT US -->
+        <section id="page-about" class="page-view">
+            <div class="bg-slate-900 text-white py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">About SkillBridge Foundation</h1>
+                    <p class="mt-4 text-xl text-slate-300 max-w-3xl mx-auto">We are on a relentless mission to build sustainable economic mobility for underrepresented talent worldwide.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <!-- Mission & Vision Cards -->
+                <div class="grid md:grid-cols-2 gap-8 mb-16">
+                    <div class="bg-gradient-to-br from-blue-900 to-slate-900 text-white p-8 sm:p-10 rounded-3xl shadow-xl border border-blue-800">
+                        <div class="inline-block p-3 rounded-xl bg-blue-500/20 text-blue-300 mb-4">
+                            <i class="fa-solid fa-bullseye text-2xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
+                        <p class="text-slate-300 leading-relaxed">
+                            To eliminate systemic unemployment by equipping underserved individuals with industry-relevant technical training, personalized mentorship, and direct pathways to sustainable, high-growth digital careers.
+                        </p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-emerald-900 to-slate-900 text-white p-8 sm:p-10 rounded-3xl shadow-xl border border-emerald-800">
+                        <div class="inline-block p-3 rounded-xl bg-emerald-500/20 text-emerald-300 mb-4">
+                            <i class="fa-solid fa-eye text-2xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-4">Our Vision</h2>
+                        <p class="text-slate-300 leading-relaxed">
+                            A global workforce where every ambitious individual—regardless of socioeconomic status or geographical background—has equal access to dignified work, economic self-reliance, and financial growth.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Story / Leadership Section -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-8 sm:p-12 mb-16 shadow-sm">
+                    <div class="max-w-3xl">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Why We Started</h3>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                            Millions of qualified young adults remain unemployed due to structural barriers, lack of practical skills training, and absence of professional networks. Concurrently, thousands of businesses struggle to fill critical digital positions.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed">
+                            SkillBridge Foundation was created to bridge this exact rift. By collaborating with donors, corporate mentors, and tech platforms, we convert raw potential into high-performing enterprise talent.
+                        </p>
+                    </div>
+
+                    <!-- Leadership Team -->
+                    <div class="mt-12 pt-12 border-t border-slate-200">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-8">Who We Work With & Our Team</h3>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <div class="w-16 h-16 rounded-full bg-blue-600 text-white font-bold text-xl flex items-center justify-center mb-4">EA</div>
+                                <h4 class="font-bold text-lg text-slate-900">Dr. Elena Adams</h4>
+                                <p class="text-xs font-bold text-blue-600 uppercase mb-2">Executive Director</p>
+                                <p class="text-sm text-slate-600">Former Tech Executive & Workforce Development Specialist with 15+ years experience.</p>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <div class="w-16 h-16 rounded-full bg-emerald-600 text-white font-bold text-xl flex items-center justify-center mb-4">MK</div>
+                                <h4 class="font-bold text-lg text-slate-900">Marcus Vance</h4>
+                                <p class="text-xs font-bold text-emerald-600 uppercase mb-2">Head of Employer Partnerships</p>
+                                <p class="text-sm text-slate-600">Leads talent placement and builds partnerships with Fortune 500 & scaling startups.</p>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <div class="w-16 h-16 rounded-full bg-purple-600 text-white font-bold text-xl flex items-center justify-center mb-4">SL</div>
+                                <h4 class="font-bold text-lg text-slate-900">Sarah Lin</h4>
+                                <p class="text-xs font-bold text-purple-600 uppercase mb-2">Director of Curriculum</p>
+                                <p class="text-sm text-slate-600">Ensures learning tracks reflect real-world technology requirements and hands-on projects.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: PROGRAMS -->
+        <section id="page-programs" class="page-view">
+            <div class="bg-slate-900 text-white py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Training Bootcamps & Courses</h1>
+                    <p class="mt-4 text-xl text-slate-300 max-w-3xl mx-auto">100% tuition-free upskilling for qualified applicants, supported by donor contributions.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <!-- Search & Filter Controls -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-10 flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div class="w-full md:w-1/2 relative">
+                        <i class="fa-solid fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="program-search" onkeyup="filterPrograms()" placeholder="Search tracks (e.g., Software, Data, UX)..." class="w-full pl-11 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm">
+                    </div>
+                    <div class="flex w-full md:w-auto gap-3">
+                        <select id="program-category" onchange="filterPrograms()" class="w-full md:w-auto px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white font-medium">
+                            <option value="all">All Categories</option>
+                            <option value="development">Software Engineering</option>
+                            <option value="data">Data & Analytics</option>
+                            <option value="design">Product & UI/UX Design</option>
+                            <option value="business">Digital Operations</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Program Cards Grid -->
+                <div id="programs-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Cards rendered dynamically via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: FOR EMPLOYERS -->
+        <section id="page-employers" class="page-view">
+            <div class="bg-slate-900 text-white py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Hire Qualified Job-Ready Talent</h1>
+                    <p class="mt-4 text-xl text-slate-300 max-w-3xl mx-auto">Connect with vetted, skilled, and highly motivated graduates ready to drive impact from day one.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="grid lg:grid-cols-12 gap-12">
+                    <!-- Left: Why Partner -->
+                    <div class="lg:col-span-7 space-y-8">
+                        <div>
+                            <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Why Partner With SkillBridge?</h2>
+                            <p class="text-slate-600 leading-relaxed">Our graduates undergo rigorous 16-week project-based bootcamps designed alongside industry leaders. Reduce your hiring costs and recruitment cycles while meeting diversity and social impact goals.</p>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div class="p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+                                <i class="fa-solid fa-user-check text-2xl text-emerald-600 mb-3"></i>
+                                <h3 class="font-bold text-slate-900 mb-1">Pre-Vetted Candidates</h3>
+                                <p class="text-xs text-slate-600">Rigorous technical assessments and behavioral interview screening.</p>
+                            </div>
+                            <div class="p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+                                <i class="fa-solid fa-hand-holding-dollar text-2xl text-blue-600 mb-3"></i>
+                                <h3 class="font-bold text-slate-900 mb-1">Zero Placement Fees</h3>
+                                <p class="text-xs text-slate-600">We do not charge recruitment fees to employer partners.</p>
+                            </div>
+                            <div class="p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+                                <i class="fa-solid fa-rocket text-2xl text-purple-600 mb-3"></i>
+                                <h3 class="font-bold text-slate-900 mb-1">Fast Onboarding</h3>
+                                <p class="text-xs text-slate-600">Candidates are equipped with modern toolstacks and agile experience.</p>
+                            </div>
+                            <div class="p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+                                <i class="fa-solid fa-award text-2xl text-amber-600 mb-3"></i>
+                                <h3 class="font-bold text-slate-900 mb-1">Mentorship Program</h3>
+                                <p class="text-xs text-slate-600">Engage your corporate employees as volunteer career advisors.</p>
+                            </div>
+                        </div>
+
+                        <!-- Sample Candidate Profiles -->
+                        <div class="bg-slate-100 p-6 rounded-2xl border border-slate-200">
+                            <h3 class="text-lg font-bold text-slate-900 mb-4">Featured Talent Pool</h3>
+                            <div class="space-y-3" id="employer-candidate-list">
+                                <!-- Dynamic Candidates Rendered Here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Employer Form -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl sticky top-28">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2">Talent Acquisition Inquiry</h3>
+                            <p class="text-xs text-slate-500 mb-6">Fill out this form and our talent matching team will connect with you within 24 hours.</p>
+                            
+                            <form id="employer-form" onsubmit="handleEmployerSubmit(event)" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Company Name</label>
+                                    <input type="text" required placeholder="Acme Inc." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Contact Email</label>
+                                    <input type="email" required placeholder="hr@acme.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Roles You Are Hiring For</label>
+                                    <select required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white">
+                                        <option value="">Select Primary Role</option>
+                                        <option>Full-Stack Developers</option>
+                                        <option>Frontend Developers</option>
+                                        <option>Data Analysts</option>
+                                        <option>UI/UX Designers</option>
+                                        <option>Digital Marketing Specialists</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Estimated Openings</label>
+                                    <input type="number" min="1" placeholder="e.g. 3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Message / Requirements</label>
+                                    <textarea rows="3" placeholder="Tell us about your team setup or specific tech stack..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-sm"></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition-all text-sm">
+                                    Request Talent Match <i class="fa-solid fa-paper-plane ml-2"></i>
+                                </button>
+                            </form>
+                            <div id="employer-success-msg" class="hidden mt-4 p-4 bg-emerald-50 text-emerald-800 rounded-xl text-xs font-medium border border-emerald-200">
+                                Thank you! Your talent request has been received. Our team will email you shortly.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 5: IMPACT & STORIES -->
+        <section id="page-impact" class="page-view">
+            <div class="bg-slate-900 text-white py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Measuring Our Social Impact</h1>
+                    <p class="mt-4 text-xl text-slate-300 max-w-3xl mx-auto">Real stories of transformation, career growth, and economic mobility.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <!-- Graduate Success Stories Grid -->
+                <h2 class="text-2xl font-bold text-slate-900 mb-8 text-center sm:text-left">Graduate Success Stories</h2>
+                <div class="grid md:grid-cols-3 gap-8" id="stories-grid">
+                    <!-- Dynamic Stories Rendered via JS -->
+                </div>
+
+                <!-- Donors & Partners Section -->
+                <div class="mt-20 pt-16 border-t border-slate-200">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <h2 class="text-xs font-extrabold uppercase tracking-widest text-blue-600 mb-2">Our Ecosystem</h2>
+                        <h3 class="text-3xl font-extrabold text-slate-900">Supported By Leading Organizations</h3>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm text-center font-bold text-slate-400 hover:text-blue-600 transition-colors">
+                            <i class="fa-solid fa-building-columns text-3xl mb-2 block"></i> Global Grant Fund
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm text-center font-bold text-slate-400 hover:text-emerald-600 transition-colors">
+                            <i class="fa-solid fa-laptop text-3xl mb-2 block"></i> TechCorp Philanthropy
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm text-center font-bold text-slate-400 hover:text-purple-600 transition-colors">
+                            <i class="fa-solid fa-earth-americas text-3xl mb-2 block"></i> Youth Initiative NGO
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm text-center font-bold text-slate-400 hover:text-amber-600 transition-colors">
+                            <i class="fa-solid fa-handshake text-3xl mb-2 block"></i> Corporate CSR Alliance
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- DONATION CALCULATOR MODAL -->
+    <div id="donate-modal" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative my-8">
+            <button onclick="closeDonateModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-xl font-bold p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-xl mb-3">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">Make a Direct Impact</h3>
+                <p class="text-xs text-slate-500 mt-1">100% of public donations fund student learning toolkits & scholarships.</p>
+            </div>
+
+            <!-- Modal Body Form -->
+            <form id="donation-form" onsubmit="handleDonateSubmit(event)" class="space-y-5">
+                <!-- Frequency Toggle -->
+                <div class="flex rounded-xl bg-slate-100 p-1">
+                    <button type="button" id="btn-freq-monthly" onclick="setDonateFrequency('monthly')" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all bg-white shadow-sm text-slate-900">Monthly</button>
+                    <button type="button" id="btn-freq-once" onclick="setDonateFrequency('once')" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all text-slate-600">One-Time</button>
+                </div>
+
+                <!-- Tier Buttons -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Select Amount</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button type="button" onclick="setDonationAmount(50)" class="donate-amt-btn py-3 border border-slate-200 rounded-xl font-bold text-slate-700 hover:border-emerald-500 focus:border-emerald-500 transition-all text-sm">$50</button>
+                        <button type="button" onclick="setDonationAmount(150)" class="donate-amt-btn py-3 border border-emerald-500 bg-emerald-50 text-emerald-700 rounded-xl font-bold transition-all text-sm">$150</button>
+                        <button type="button" onclick="setDonationAmount(500)" class="donate-amt-btn py-3 border border-slate-200 rounded-xl font-bold text-slate-700 hover:border-emerald-500 focus:border-emerald-500 transition-all text-sm">$500</button>
+                    </div>
+                </div>
+
+                <!-- Custom Amount Input -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Or Enter Custom Amount ($ USD)</label>
+                    <input type="number" id="custom-donate-amt" value="150" min="5" oninput="updateImpactCalc(this.value)" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-900 font-bold text-lg">
+                </div>
+
+                <!-- Calculated Impact Card -->
+                <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-4 text-emerald-900">
+                    <p class="text-xs uppercase font-bold text-emerald-700 tracking-wider mb-1">Your Direct Contribution Provides:</p>
+                    <p id="donation-impact-text" class="text-sm font-semibold leading-relaxed">
+                        Full funding for 1 student's software certification & exam vouchers.
+                    </p>
+                </div>
+
+                <!-- Donor Info -->
+                <div class="space-y-3">
+                    <input type="text" placeholder="Full Name" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none text-sm">
+                    <input type="email" placeholder="Email Address" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none text-sm">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full py-4 rounded-xl font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/30 transition-all text-base">
+                    Complete Contribution <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </form>
+
+            <div id="donate-thankyou" class="hidden text-center py-8">
+                <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-3xl mb-4">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2">Thank You for Your Generosity!</h3>
+                <p class="text-sm text-slate-600 mb-6">A confirmation email and tax receipt have been dispatched. You are directly transforming lives.</p>
+                <button onclick="closeDonateModal()" class="px-6 py-2.5 bg-slate-900 text-white rounded-xl font-semibold text-sm">Close Window</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-slate-800">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-black">
+                            S
+                        </div>
+                        <span class="text-lg font-bold text-white">SkillBridge</span>
+                    </div>
+                    <p class="text-xs leading-relaxed text-slate-400">
+                        SkillBridge Foundation is a registered 501(c)(3) non-profit organization focused on economic mobility and technical education.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-xs font-extrabold text-white uppercase tracking-wider mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><button onclick="navigateTo('home')" class="hover:text-white transition-colors">Home</button></li>
+                        <li><button onclick="navigateTo('about')" class="hover:text-white transition-colors">About Mission</button></li>
+                        <li><button onclick="navigateTo('programs')" class="hover:text-white transition-colors">Course Catalog</button></li>
+                        <li><button onclick="navigateTo('employers')" class="hover:text-white transition-colors">Partner With Us</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-extrabold text-white uppercase tracking-wider mb-4">Programs</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" onclick="navigateTo('programs'); return false;" class="hover:text-white">Full-Stack Bootcamp</a></li>
+                        <li><a href="#" onclick="navigateTo('programs'); return false;" class="hover:text-white">Data Analytics Track</a></li>
+                        <li><a href="#" onclick="navigateTo('programs'); return false;" class="hover:text-white">UI/UX Product Design</a></li>
+                        <li><a href="#" onclick="navigateTo('programs'); return false;" class="hover:text-white">Digital Growth Marketing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-extrabold text-white uppercase tracking-wider mb-4">Connect & Support</h4>
+                    <p class="text-xs text-slate-400 mb-3">Questions about enrollment or sponsorship?</p>
+                    <a href="mailto:contact@skillbridge.org" class="text-xs text-emerald-400 font-semibold hover:underline block mb-4">contact@skillbridge.org</a>
+                    <div class="flex space-x-3 text-slate-400">
+                        <a href="#" class="hover:text-white"><i class="fa-brands fa-linkedin text-lg"></i></a>
+                        <a href="#" class="hover:text-white"><i class="fa-brands fa-twitter text-lg"></i></a>
+                        <a href="#" class="hover:text-white"><i class="fa-brands fa-github text-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 text-center md:flex md:justify-between text-xs text-slate-500">
+                <p>&copy; 2026 SkillBridge Foundation. All rights reserved.</p>
+                <div class="mt-4 md:mt-0 space-x-6">
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Terms of Service</a>
+                    <a href="#" class="hover:underline">Financial Transparency</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // Data Structures
+        const programsData = [
+            { id: 1, title: 'Full-Stack Software Engineering', category: 'development', duration: '16 Weeks', level: 'Beginner to Intermediate', description: 'Master HTML, CSS, JavaScript, React, Node.js and SQL databases through real-world team projects.', icon: 'fa-code', bg: 'bg-blue-50', text: 'text-blue-600' },
+            { id: 2, title: 'Data Analytics & Insights', category: 'data', duration: '12 Weeks', level: 'Beginner Friendly', description: 'Learn Python, SQL, Excel, and PowerBI to solve actual business intelligence challenges.', icon: 'fa-chart-pie', bg: 'bg-emerald-50', text: 'text-emerald-600' },
+            { id: 3, title: 'UI/UX Product Design', category: 'design', duration: '12 Weeks', level: 'No Coding Required', description: 'Design user-centered mobile and web interfaces using Figma, user research, and wireframing.', icon: 'fa-pen-ruler', bg: 'bg-purple-50', text: 'text-purple-600' },
+            { id: 4, title: 'Digital Operations & Growth', category: 'business', duration: '10 Weeks', level: 'All Levels', description: 'Comprehensive training in modern digital marketing, CRM workflows, and project coordination.', icon: 'fa-bullhorn', bg: 'bg-amber-50', text: 'text-amber-600' },
+            { id: 5, title: 'Cloud Engineering & DevOps', category: 'development', duration: '16 Weeks', level: 'Intermediate', description: 'AWS fundamentals, Docker containers, and CI/CD automation deployment practices.', icon: 'fa-cloud', bg: 'bg-sky-50', text: 'text-sky-600' },
+            { id: 6, title: 'Cybersecurity Fundamentals', category: 'data', duration: '14 Weeks', level: 'Intermediate', description: 'Network security, threat management, and ethical hacking fundamentals for corporate readiness.', icon: 'fa-shield-halved', bg: 'bg-rose-50', text: 'text-rose-600' }
+        ];
+
+        const candidateData = [
+            { name: 'Amara O.', role: 'Frontend React Developer', skills: ['React', 'Tailwind', 'JavaScript'], availability: 'Immediate' },
+            { name: 'David M.', role: 'Junior Data Analyst', skills: ['Python', 'SQL', 'Tableau'], availability: '2 Weeks Notice' },
+            { name: 'Sophia L.', role: 'UI/UX Designer', skills: ['Figma', 'Prototyping', 'User Research'], availability: 'Immediate' }
+        ];
+
+        const storiesData = [
+            { name: 'Kofi Mensah', oldRole: 'Unemployed Graduate', newRole: 'Junior Frontend Developer at TechCorp', quote: 'SkillBridge didn\'t just teach me coding; they paired me with a mentor who helped me navigate technical interviews.', imgBg: 'bg-blue-600' },
+            { name: 'Elena Rostova', oldRole: 'Retail Associate', newRole: 'Data Specialist at FinTech Global', quote: 'I tripled my income within 6 months of graduating. The practical project portfolio was the key factor.', imgBg: 'bg-emerald-600' },
+            { name: 'Tariq Al-Mansoor', oldRole: 'Hospitality Worker', newRole: 'Cloud Support Engineer', quote: 'The donation-funded scholarship gave me access to a laptop and exam vouchers I could never have afforded alone.', imgBg: 'bg-purple-600' }
+        ];
+
+        // Page Navigation Controller
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            const targetView = document.getElementById(`page-${pageId}`);
+            if (targetView) {
+                targetView.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update Nav Tab Styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = 'nav-btn px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all';
+            });
+            const activeNavBtn = document.getElementById(`nav-${pageId}`);
+            if (activeNavBtn) {
+                activeNavBtn.className = 'nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition-all text-blue-700 bg-blue-50';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Program Filter Logic
+        function renderPrograms(list) {
+            const container = document.getElementById('programs-grid');
+            if (!container) return;
+
+            if (list.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">No training programs matching your search criteria.</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map(prog => `
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between hover:shadow-xl transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl ${prog.bg} ${prog.text} flex items-center justify-center text-xl">
+                                <i class="fa-solid ${prog.icon}"></i>
+                            </div>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded bg-slate-100 text-slate-600">${prog.duration}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">${prog.title}</h3>
+                        <p class="text-xs font-semibold text-emerald-600 uppercase mb-3">${prog.level}</p>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">${prog.description}</p>
+                    </div>
+                    <button onclick="openDonateModal()" class="w-full py-2.5 rounded-xl border border-blue-600 text-blue-600 font-bold hover:bg-blue-600 hover:text-white transition-all text-sm text-center">
+                        Sponsor This Course
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function filterPrograms() {
+            const query = document.getElementById('program-search').value.toLowerCase();
+            const category = document.getElementById('program-category').value;
+
+            const filtered = programsData.filter(prog => {
+                const matchesQuery = prog.title.toLowerCase().includes(query) || prog.description.toLowerCase().includes(query);
+                const matchesCat = category === 'all' || prog.category === category;
+                return matchesQuery && matchesCat;
+            });
+
+            renderPrograms(filtered);
+        }
+
+        // Candidates & Stories Rendering
+        function renderEmployersSection() {
+            const container = document.getElementById('employer-candidate-list');
+            if (!container) return;
+
+            container.innerHTML = candidateData.map(c => `
+                <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">${c.name}</h4>
+                        <p class="text-xs text-blue-600 font-medium">${c.role}</p>
+                        <div class="flex gap-1 mt-2">
+                            ${c.skills.map(s => `<span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-semibold">${s}</span>`).join('')}
+                        </div>
+                    </div>
+                    <span class="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded">${c.availability}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderStoriesSection() {
+            const container = document.getElementById('stories-grid');
+            if (!container) return;
+
+            container.innerHTML = storiesData.map(s => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-12 h-12 rounded-full ${s.imgBg} text-white font-bold flex items-center justify-center text-lg">
+                                ${s.name.split(' ').map(n=>n[0]).join('')}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">${s.name}</h4>
+                                <p class="text-xs text-emerald-600 font-semibold">${s.newRole}</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-sm italic leading-relaxed mb-4">"${s.quote}"</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 text-xs text-slate-400">
+                        Previous Status: <span class="font-semibold text-slate-600">${s.oldRole}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Employer Form Handler
+        function handleEmployerSubmit(e) {
+            e.preventDefault();
+            document.getElementById('employer-form').reset();
+            const msg = document.getElementById('employer-success-msg');
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 5000);
+        }
+
+        // Modal Logic & Impact Calculator
+        let currentDonateFreq = 'monthly';
+
+        function openDonateModal() {
+            document.getElementById('donate-modal').classList.remove('hidden');
+        }
+
+        function closeDonateModal() {
+            document.getElementById('donate-modal').classList.add('hidden');
+            document.getElementById('donate-thankyou').classList.add('hidden');
+            document.getElementById('donation-form').classList.remove('hidden');
+        }
+
+        function setDonateFrequency(freq) {
+            currentDonateFreq = freq;
+            const btnMonthly = document.getElementById('btn-freq-monthly');
+            const btnOnce = document.getElementById('btn-freq-once');
+            
+            if(freq === 'monthly') {
+                btnMonthly.className = "flex-1 py-2 text-xs font-bold rounded-lg transition-all bg-white shadow-sm text-slate-900";
+                btnOnce.className = "flex-1 py-2 text-xs font-bold rounded-lg transition-all text-slate-600";
+            } else {
+                btnOnce.className = "flex-1 py-2 text-xs font-bold rounded-lg transition-all bg-white shadow-sm text-slate-900";
+                btnMonthly.className = "flex-1 py-2 text-xs font-bold rounded-lg transition-all text-slate-600";
+            }
+        }
+
+        function setDonationAmount(amt) {
+            document.getElementById('custom-donate-amt').value = amt;
+            updateImpactCalc(amt);
+        }
+
+        function updateImpactCalc(val) {
+            const amount = parseFloat(val) || 0;
+            const impactEl = document.getElementById('donation-impact-text');
+
+            if (amount < 25) {
+                impactEl.innerText = "Provides learning supplies and internet stipend for 1 trainee.";
+            } else if (amount < 100) {
+                impactEl.innerText = "Covers software certification & technical exam vouchers for 1 student.";
+            } else if (amount < 300) {
+                impactEl.innerText = "Provides a refurbished laptop and hardware toolkit for an underprivileged trainee.";
+            } else if (amount < 1000) {
+                impactEl.innerText = "Fully sponsors 1 student's complete 16-week bootcamp training and 1-on-1 mentorship.";
+            } else {
+                impactEl.innerText = `Sponsors ${Math.floor(amount / 500)} trainees with complete bootcamp educations & career placement!`;
+            }
+        }
+
+        function handleDonateSubmit(e) {
+            e.preventDefault();
+            document.getElementById('donation-form').classList.add('hidden');
+            document.getElementById('donate-thankyou').classList.remove('hidden');
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            renderPrograms(programsData);
+            renderEmployersSection();
+            renderStoriesSection();
+        };
+    </script>
+</body>
+</html>
